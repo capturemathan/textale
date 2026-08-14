@@ -179,14 +179,18 @@ export default function ShareCard({ tab, analysis, onClose }: ShareCardProps) {
                   <IconShield className="size-3 text-[#F17141]" />
                   Processed locally
                 </span>
-                <span className="text-[#F17141] font-black">TexTale</span>
               </div>
 
               {/* Tagline inviting viewers to visit TexTale */}
-              <div className="rounded-xl bg-[#F17141]/10 px-3 py-1.5 flex items-center justify-between text-[10px] font-extrabold text-[#24201D]">
+              <a 
+                href="https://capturemathan.github.io/textale/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="rounded-xl bg-[#F17141]/10 px-3 py-1.5 flex items-center justify-between text-[10px] font-extrabold text-[#24201D] hover:bg-[#F17141]/20 transition-colors"
+              >
                 <span>Discover your chat stories</span>
                 <span className="text-[#F17141] font-black">Visit TexTale →</span>
-              </div>
+              </a>
             </div>
           </div>
         </div>
