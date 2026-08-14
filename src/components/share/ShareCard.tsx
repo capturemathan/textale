@@ -31,17 +31,34 @@ export default function ShareCard({ tab, analysis, onClose }: ShareCardProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
+  const generateImage = async (node: HTMLElement): Promise<string> => {
+    try {
+      return await toPng(node, { pixelRatio: 2, cacheBust: false });
+    } catch (err1) {
+      console.warn('First toPng attempt failed, retrying with fallback options...', err1);
+      try {
+        return await toPng(node, { pixelRatio: 2, skipFonts: true });
+      } catch (err2) {
+        console.warn('Second toPng attempt failed, retrying with base ratio...', err2);
+        return await toPng(node, { pixelRatio: 1, skipFonts: true });
+      }
+    }
+  };
+
   const download = async () => {
     if (!cardRef.current) return;
     setBusy(true);
     try {
-      const dataUrl = await toPng(cardRef.current, { pixelRatio: 2, cacheBust: true });
+      const dataUrl = await generateImage(cardRef.current);
       const link = document.createElement('a');
       link.download = `textale-${tab.toLowerCase()}.png`;
       link.href = dataUrl;
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     } catch (err) {
-      console.error(err);
+      console.error('Failed to save image:', err);
+      alert('Could not export image. Please try taking a screenshot instead.');
     } finally {
       setBusy(false);
     }
@@ -51,17 +68,48 @@ export default function ShareCard({ tab, analysis, onClose }: ShareCardProps) {
     if (!cardRef.current) return;
     setBusy(true);
     try {
-      const dataUrl = await toPng(cardRef.current, { pixelRatio: 2, cacheBust: true });
-      const blob = await (await fetch(dataUrl)).blob();
+      const dataUrl = await generateImage(cardRef.current);
+      const res = await fetch(dataUrl);
+      const blob = await res.blob();
       const file = new File([blob], `textale-${tab.toLowerCase()}.png`, { type: 'image/png' });
-      if (navigator.share) {
+
+      if (typeof navigator !== 'undefined' && 'canShare' in navigator && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: 'TexTale Analysis',
+          text: 'Check out my WhatsApp chat stats on TexTale!',
           files: [file],
         });
+      } else if (typeof navigator !== 'undefined' && 'share' in navigator) {
+        await navigator.share({
+          title: 'TexTale Analysis',
+          text: 'Check out my WhatsApp chat stats on TexTale!',
+          url: window.location.href,
+        });
+      } else {
+        // Fallback to direct download if sharing files is unsupported
+        const link = document.createElement('a');
+        link.download = `textale-${tab.toLowerCase()}.png`;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
     } catch (err) {
-      console.error(err);
+      if (err instanceof Error && err.name === 'AbortError') {
+        return;
+      }
+      console.error('Share error:', err);
+      try {
+        const dataUrl = await generateImage(cardRef.current);
+        const link = document.createElement('a');
+        link.download = `textale-${tab.toLowerCase()}.png`;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch {
+        alert('Could not share or save image.');
+      }
     } finally {
       setBusy(false);
     }
@@ -154,16 +202,14 @@ export default function ShareCard({ tab, analysis, onClose }: ShareCardProps) {
             {busy ? 'Saving...' : 'Save PNG'}
           </button>
           
-          {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
-            <button 
-              onClick={share}
-              disabled={busy}
-              className="flex-1 flex items-center justify-center gap-2 bg-[#FFECAE] text-[#6C4E2A] py-3.5 px-4 rounded-2xl font-extrabold text-[14px] hover:bg-[#F8C777] transition-all disabled:opacity-50 cursor-pointer"
-            >
-              <IconShare className="size-4.5" />
-              Share
-            </button>
-          )}
+          <button 
+            onClick={share}
+            disabled={busy}
+            className="flex-1 flex items-center justify-center gap-2 bg-[#FFECAE] text-[#6C4E2A] py-3.5 px-4 rounded-2xl font-extrabold text-[14px] hover:bg-[#F8C777] transition-all disabled:opacity-50 cursor-pointer"
+          >
+            <IconShare className="size-4.5" />
+            {busy ? 'Exporting...' : 'Share'}
+          </button>
         </div>
       </div>
     </div>
