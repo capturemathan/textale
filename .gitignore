@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Vite compiled config
+vite.config.js
+vite.config.d.ts
+
+# Environment variables
+.env
+.env.*
+*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Scratch / temp
+scratch/
