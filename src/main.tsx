@@ -1,8 +1,12 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { TexTaleProvider } from '@/store/textale-store';
+import { initPostHog } from '@/lib/posthog';
 import App from './App';
 import './index.css';
+
+// Initialize PostHog Analytics
+initPostHog();
 
 interface Props {
   children?: ReactNode;
