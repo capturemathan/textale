@@ -144,3 +144,60 @@ export function formatClock(ts: number): string {
   return new Date(ts).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 }
 
+export function isMultiDaySession(start: number, end: number): boolean {
+  const d1 = new Date(start);
+  const d2 = new Date(end);
+  return (
+    d1.getFullYear() !== d2.getFullYear() ||
+    d1.getMonth() !== d2.getMonth() ||
+    d1.getDate() !== d2.getDate()
+  );
+}
+
+export function getDaysDifference(start: number, end: number): number {
+  const d1 = new Date(start);
+  d1.setHours(0, 0, 0, 0);
+  const d2 = new Date(end);
+  d2.setHours(0, 0, 0, 0);
+  return Math.round((d2.getTime() - d1.getTime()) / (24 * 60 * 60 * 1000));
+}
+
+export function formatSessionDate(start: number, end: number): string {
+  const d1 = new Date(start);
+  const d2 = new Date(end);
+  const sameDay =
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate();
+
+  if (sameDay) {
+    return d1.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  const sameYear = d1.getFullYear() === d2.getFullYear();
+  if (sameYear) {
+    return `${d1.toLocaleDateString("en-US", { month: "short", day: "numeric" })} → ${d2.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+  }
+
+  return `${d1.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} → ${d2.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
+}
+
+export function formatSessionTimeRange(start: number, end: number): string {
+  const startClock = formatClock(start);
+  const endClock = formatClock(end);
+  const daysDiff = getDaysDifference(start, end);
+
+  if (daysDiff > 0) {
+    return `${startClock} → ${endClock} (+${daysDiff}d)`;
+  }
+  return `${startClock} → ${endClock}`;
+}
+
+export function formatMessageDateTime(ts: number, isMultiDay = false): string {
+  const clock = formatClock(ts);
+  if (!isMultiDay) return clock;
+  const d = new Date(ts);
+  const dateStr = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  return `${dateStr}, ${clock}`;
+}
+

@@ -3,7 +3,15 @@ import { toPng } from 'html-to-image';
 import { useTexTale } from '@/store/textale-store';
 import { Reveal } from '@/components/common/Reveal';
 import { MetricInfoButton } from '@/components/metrics/MetricInfoButton';
-import { formatNumber, formatDayKey, formatDuration } from '@/lib/formatting';
+import {
+  formatNumber,
+  formatDayKey,
+  formatDuration,
+  formatSessionDate,
+  formatSessionTimeRange,
+  formatMessageDateTime,
+  isMultiDaySession,
+} from '@/lib/formatting';
 import { IconDownload } from '@/components/icons';
 
 interface RecordsTabProps {
@@ -28,19 +36,24 @@ export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
     try {
       const dataUrl = await toPng(recordsRef.current, {
         pixelRatio: 2,
-        cacheBust: true,
+        cacheBust: false,
         backgroundColor: '#FFFCF5',
       });
       const link = document.createElement('a');
       link.download = 'textale-all-time-records.png';
       link.href = dataUrl;
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     } catch (err) {
       console.error('Failed to export image:', err);
     } finally {
       setBusy(false);
     }
   };
+
+  const longestSession = analysis.longestSession;
+  const isMultiDayLongest = longestSession ? isMultiDaySession(longestSession.start, longestSession.end) : false;
 
   const records = [
     {
@@ -57,8 +70,12 @@ export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
     {
       id: "02",
       title: "Longest Conversation",
-      value: analysis.longestSession ? formatDuration(analysis.longestSession.durationMs) : "N/A",
-      subtitle: analysis.longestSession ? `${formatNumber(analysis.longestSession.messageCount)} messages` : "",
+      value: longestSession ? formatDuration(longestSession.durationMs) : "N/A",
+      subtitle: longestSession ? `${formatNumber(longestSession.messageCount)} messages` : "",
+      meta: longestSession ? `${formatSessionDate(longestSession.start, longestSession.end)} · ${formatSessionTimeRange(longestSession.start, longestSession.end)}` : undefined,
+      firstMessage: longestSession?.firstMessage,
+      lastMessage: longestSession?.lastMessage,
+      isMultiDay: isMultiDayLongest,
       bg: "bg-[#F17141]",
       text: "text-[#FFFCF5]",
       numberOpacity: "opacity-20 text-[#FFFCF5]",
@@ -121,7 +138,7 @@ export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
               <div className={`absolute -right-2 -top-4 text-[100px] font-black leading-none ${record.numberOpacity}`}>
                 {record.id}
               </div>
-              <div className="relative z-10 mb-12 flex items-center justify-between">
+              <div className="relative z-10 mb-8 flex items-center justify-between">
                 <p className={`text-[10px] font-extrabold uppercase tracking-[0.15em] ${record.eyebrowColor}`}>
                   {record.title}
                 </p>
@@ -134,12 +151,41 @@ export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
                 )}
               </div>
               <div className="relative z-10">
-                <div className="text-[26px] font-extrabold leading-tight tracking-tight mb-2">
+                <div className="text-[26px] font-extrabold leading-tight tracking-tight mb-1">
                   {record.value}
                 </div>
                 <div className={`text-[13px] font-semibold ${record.subtitleColor}`}>
                   {record.subtitle}
                 </div>
+                {record.meta && (
+                  <div className={`mt-2 text-[11px] font-bold ${record.subtitleColor}`}>
+                    {record.meta}
+                  </div>
+                )}
+                {(record.firstMessage || record.lastMessage) && (
+                  <div className="mt-3.5 space-y-1.5 pt-3 border-t border-current/20 text-[11px]">
+                    {record.firstMessage && (
+                      <div className="rounded-xl bg-black/15 p-2">
+                        <div className={`text-[9px] font-extrabold uppercase tracking-wider mb-0.5 ${record.eyebrowColor}`}>
+                          Start · {record.firstMessage.sender} ({formatMessageDateTime(record.firstMessage.timestamp, record.isMultiDay)})
+                        </div>
+                        <div className="italic line-clamp-1 opacity-95">
+                          "{record.firstMessage.text}"
+                        </div>
+                      </div>
+                    )}
+                    {record.lastMessage && (
+                      <div className="rounded-xl bg-black/15 p-2">
+                        <div className={`text-[9px] font-extrabold uppercase tracking-wider mb-0.5 ${record.eyebrowColor}`}>
+                          End · {record.lastMessage.sender} ({formatMessageDateTime(record.lastMessage.timestamp, record.isMultiDay)})
+                        </div>
+                        <div className="italic line-clamp-1 opacity-95">
+                          "{record.lastMessage.text}"
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </Reveal>

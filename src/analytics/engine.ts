@@ -92,6 +92,16 @@ export function buildSessions(messages: Message[]): Session[] {
         messageCount: 0,
         initiator: m.sender,
         senders: {},
+        firstMessage: {
+          sender: m.sender,
+          text: m.text,
+          timestamp: m.timestamp,
+        },
+        lastMessage: {
+          sender: m.sender,
+          text: m.text,
+          timestamp: m.timestamp,
+        },
       };
       sessions.push(current);
     }
@@ -101,6 +111,11 @@ export function buildSessions(messages: Message[]): Session[] {
       session.end = m.timestamp;
       session.durationMs = session.end - session.start;
       session.senders[m.sender] = (session.senders[m.sender] ?? 0) + 1;
+      session.lastMessage = {
+        sender: m.sender,
+        text: m.text,
+        timestamp: m.timestamp,
+      };
     }
     previousTs = m.timestamp;
   });

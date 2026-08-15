@@ -1,7 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
 import type { Analysis } from '@/types';
-import { formatDayKey, formatDuration, formatNumber, formatClock } from '@/lib/formatting';
+import {
+  formatDayKey,
+  formatDuration,
+  formatNumber,
+  formatSessionDate,
+  formatSessionTimeRange,
+  formatMessageDateTime,
+  isMultiDaySession,
+} from '@/lib/formatting';
 import {
   IconClose,
   IconDownload,
@@ -301,21 +309,30 @@ function CardBody({ tab, analysis }: { tab: string; analysis: Analysis }) {
   if (tabLower === 'conversations') {
     const session = analysis.longestSession;
     if (!session) return <p className="text-[14px] font-extrabold">Not enough data yet.</p>;
+    const isMultiDay = isMultiDaySession(session.start, session.end);
     return (
-      <div className="my-auto space-y-4">
+      <div className="my-auto space-y-3">
         <div>
           <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#6C4E2A]">Longest Conversation</p>
-          <p className="text-[42px] font-extrabold leading-none tracking-[-0.05em] text-[#F17141] mt-1">
+          <p className="text-[38px] font-extrabold leading-none tracking-[-0.05em] text-[#F17141] mt-1">
             {formatDuration(session.durationMs)}
           </p>
-          <p className="text-[13px] font-extrabold text-[#24201D] mt-1.5">{formatNumber(session.messageCount)} messages</p>
+          <p className="text-[12px] font-extrabold text-[#24201D] mt-1">{formatNumber(session.messageCount)} messages</p>
         </div>
-        <div className="rounded-xl bg-[#FFFCF5]/80 p-3 border border-[#F17141]/20">
-          <p className="text-[11px] font-extrabold text-[#24201D]">
-            {formatClock(session.start)} → {formatClock(session.end)}
+        <div className="rounded-xl bg-[#FFFCF5]/80 p-2.5 border border-[#F17141]/20 text-[11px]">
+          <p className="font-extrabold text-[#24201D]">
+            {formatSessionTimeRange(session.start, session.end)}
           </p>
-          <p className="text-[10px] font-bold text-[#766F69] mt-0.5">{formatDayKey(new Date(session.start).toISOString().slice(0, 10))}</p>
+          <p className="text-[10px] font-bold text-[#766F69] mt-0.5">{formatSessionDate(session.start, session.end)}</p>
         </div>
+        {session.firstMessage && (
+          <div className="rounded-xl bg-[#24201D] p-2.5 text-[#FFFCF5] text-[10px]">
+            <p className="font-extrabold text-[#FFECAE] text-[9px] uppercase tracking-wider">
+              Opening Message · {session.firstMessage.sender} ({formatMessageDateTime(session.firstMessage.timestamp, isMultiDay)})
+            </p>
+            <p className="italic line-clamp-2 mt-0.5 text-[#FFFCF5]/90">"{session.firstMessage.text}"</p>
+          </div>
+        )}
       </div>
     );
   }

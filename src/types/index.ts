@@ -42,6 +42,12 @@ export interface ParseResult {
 }
 
 
+export interface SessionMessageSnippet {
+  sender: string;
+  text: string;
+  timestamp: number;
+}
+
 export interface Session {
   index: number;
   start: number;
@@ -50,6 +56,8 @@ export interface Session {
   messageCount: number;
   initiator: string;
   senders: Record<string, number>;
+  firstMessage?: SessionMessageSnippet;
+  lastMessage?: SessionMessageSnippet;
 }
 
 export interface ResponseInterval {
