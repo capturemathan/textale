@@ -27,11 +27,11 @@ export function MetricHero({
           {onInfo && (
             <button
               onClick={onInfo}
-              className="grid size-7 shrink-0 place-items-center rounded-full text-[#BEB5AE] transition hover:bg-[#FFFCF5]/20 hover:text-[#FFECAE] cursor-pointer"
+              className="grid size-8 shrink-0 place-items-center rounded-full bg-[#FFFCF5]/10 border border-[#FFFCF5]/25 text-[#FFECAE] transition-all hover:bg-[#FFFCF5]/25 hover:text-[#FFFCF5] cursor-pointer shadow-xs"
               aria-label={`Info about ${eyebrow}`}
-              title="How we came up with this value"
+              title="How we calculated this metric"
             >
-              <IconInfo className="size-4" />
+              <IconInfo className="size-4.5" />
             </button>
           )}
         </div>

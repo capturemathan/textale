@@ -2,14 +2,17 @@ import { useTexTale } from '@/store/textale-store';
 import { MetricCard } from '@/components/metrics/MetricCard';
 import { MetricInfoButton } from '@/components/metrics/MetricInfoButton';
 import { Reveal } from '@/components/common/Reveal';
+import { ChapterFooter } from '@/components/common/ChapterFooter';
 import { formatNumber } from '@/lib/formatting';
 import { IconSmile } from '@/components/icons';
+import type { ExplorerTab } from '@/components/explorer';
 
 interface EmojisTabProps {
+  onTabChange?: (tab: ExplorerTab) => void;
   onInfo?: (label: string) => void;
 }
 
-export default function EmojisTab({ onInfo }: EmojisTabProps) {
+export default function EmojisTab({ onTabChange, onInfo }: EmojisTabProps) {
   const { analysis } = useTexTale();
   if (!analysis) return null;
 
@@ -123,6 +126,9 @@ export default function EmojisTab({ onInfo }: EmojisTabProps) {
           />
         </div>
       </Reveal>
+
+      {/* Storybook Chapter Progression Footer */}
+      <ChapterFooter currentTab="Emojis" onTabChange={onTabChange} />
     </div>
   );
 }

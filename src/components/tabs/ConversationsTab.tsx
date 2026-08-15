@@ -4,6 +4,7 @@ import { MetricInfoButton } from '@/components/metrics/MetricInfoButton';
 import { Donut } from '@/components/charts/Donut';
 import { ChartBars } from '@/components/charts/ChartBars';
 import { Reveal } from '@/components/common/Reveal';
+import { ChapterFooter } from '@/components/common/ChapterFooter';
 import {
   formatNumber,
   formatDuration,
@@ -14,14 +15,16 @@ import {
   getDaysDifference,
 } from '@/lib/formatting';
 import { IconActivity } from '@/components/icons';
+import type { ExplorerTab } from '@/components/explorer';
 
 const PALETTE = ['#F17141', '#F8C777', '#6C4E2A', '#3C3530', '#D95F31', '#B4A99D', '#E6D3AE', '#806641'];
 
 interface ConversationsTabProps {
+  onTabChange?: (tab: ExplorerTab) => void;
   onInfo?: (label: string) => void;
 }
 
-export default function ConversationsTab({ onInfo }: ConversationsTabProps) {
+export default function ConversationsTab({ onTabChange, onInfo }: ConversationsTabProps) {
   const { analysis } = useTexTale();
   if (!analysis) return null;
 
@@ -275,6 +278,9 @@ export default function ConversationsTab({ onInfo }: ConversationsTabProps) {
           </div>
         </div>
       </Reveal>
+
+      {/* Storybook Chapter Progression Footer */}
+      <ChapterFooter currentTab="Conversations" onTabChange={onTabChange} />
     </div>
   );
 }

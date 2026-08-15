@@ -23,7 +23,8 @@ export function ExplorerLayout({
     <div className="flex min-h-[100dvh] bg-[#FFFCF5] text-[#24201D] font-sans selection:bg-[#F17141]/20">
       <Sidebar activeTab={activeTab} onTabChange={onTabChange} />
       <div className="flex w-full flex-col lg:min-w-0">
-        <TopBar onMenuClick={() => setIsMobileOpen(true)} />
+        <TopBar activeTab={activeTab} onMenuClick={() => setIsMobileOpen(true)} />
+
         <main className="flex-1 px-4 py-6 sm:px-8 lg:px-12 pb-16 max-w-7xl mx-auto w-full flex flex-col justify-between">
           <div>
             <FilterBar activeTab={activeTab} onShare={onShare} />

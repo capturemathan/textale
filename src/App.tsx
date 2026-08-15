@@ -31,13 +31,13 @@ export default function App() {
   const renderTab = () => {
     switch (activeTab) {
       case 'Overview': return <OverviewTab onTabChange={setActiveTab} onInfo={setInfoMetricLabel} />;
-      case 'Activity': return <ActivityTab onInfo={setInfoMetricLabel} onShare={handleShare} />;
-      case 'Conversations': return <ConversationsTab onInfo={setInfoMetricLabel} />;
-      case 'Words': return <WordsTab onInfo={setInfoMetricLabel} />;
-      case 'Emojis': return <EmojisTab onInfo={setInfoMetricLabel} />;
-      case 'Links': return <LinksTab onInfo={setInfoMetricLabel} />;
-      case 'Records': return <RecordsTab onShare={handleShare} onInfo={setInfoMetricLabel} />;
-      default: return <OverviewTab onInfo={setInfoMetricLabel} />;
+      case 'Activity': return <ActivityTab onTabChange={setActiveTab} onInfo={setInfoMetricLabel} onShare={handleShare} />;
+      case 'Conversations': return <ConversationsTab onTabChange={setActiveTab} onInfo={setInfoMetricLabel} />;
+      case 'Words': return <WordsTab onTabChange={setActiveTab} onInfo={setInfoMetricLabel} />;
+      case 'Emojis': return <EmojisTab onTabChange={setActiveTab} onInfo={setInfoMetricLabel} />;
+      case 'Links': return <LinksTab onTabChange={setActiveTab} onInfo={setInfoMetricLabel} />;
+      case 'Records': return <RecordsTab onTabChange={setActiveTab} onShare={handleShare} onInfo={setInfoMetricLabel} />;
+      default: return <OverviewTab onTabChange={setActiveTab} onInfo={setInfoMetricLabel} />;
     }
   };
 

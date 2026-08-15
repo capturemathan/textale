@@ -6,15 +6,18 @@ import { ActivityHeatmap } from '@/components/charts/ActivityHeatmap';
 import { ChartBars } from '@/components/charts/ChartBars';
 import { Reveal } from '@/components/common/Reveal';
 import { DayDrawer } from '@/components/common/DayDrawer';
+import { ChapterFooter } from '@/components/common/ChapterFooter';
 import { formatNumber, formatPercent } from '@/lib/formatting';
 import { IconClock } from '@/components/icons';
+import type { ExplorerTab } from '@/components/explorer';
 
 interface ActivityTabProps {
+  onTabChange?: (tab: ExplorerTab) => void;
   onInfo?: (label: string) => void;
   onShare?: () => void;
 }
 
-export default function ActivityTab({ onInfo, onShare }: ActivityTabProps) {
+export default function ActivityTab({ onTabChange, onInfo, onShare }: ActivityTabProps) {
   const { analysis } = useTexTale();
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
@@ -139,6 +142,9 @@ export default function ActivityTab({ onInfo, onShare }: ActivityTabProps) {
         analysis={analysis}
         onClose={() => setSelectedDay(null)}
       />
+
+      {/* Storybook Chapter Progression Footer */}
+      <ChapterFooter currentTab="Activity" onTabChange={onTabChange} />
     </div>
   );
 }

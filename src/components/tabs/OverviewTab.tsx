@@ -5,32 +5,15 @@ import { Donut } from '@/components/charts/Donut';
 import { ChartBars } from '@/components/charts/ChartBars';
 import { Reveal } from '@/components/common/Reveal';
 import { formatNumber, formatSpan } from '@/lib/formatting';
-import {
-  IconBarChart,
-  IconActivity,
-  IconMessageCircle,
-  IconType,
-  IconSmile,
-  IconLink,
-  IconTrophy,
-} from '@/components/icons';
+import { IconBarChart } from '@/components/icons';
 import type { ExplorerTab } from '@/components/explorer';
-
 import { MetricInfoButton } from '@/components/metrics/MetricInfoButton';
+import { ChapterFooter } from '@/components/common/ChapterFooter';
 
 interface OverviewTabProps {
   onTabChange?: (tab: ExplorerTab) => void;
   onInfo?: (label: string) => void;
 }
-
-const chapters: { tab: ExplorerTab; icon: React.FC<any>; desc: string }[] = [
-  { tab: "Activity", icon: IconActivity, desc: "Daily activity calendar, busiest dates & 24h volume" },
-  { tab: "Conversations", icon: IconMessageCircle, desc: "30-min gap sessions & average reply speed" },
-  { tab: "Words", icon: IconType, desc: "Vocabulary variety, most used words & questions" },
-  { tab: "Emojis", icon: IconSmile, desc: "#1 top emojis & monthly evolution chart" },
-  { tab: "Links", icon: IconLink, desc: "Top shared web domains & link distribution" },
-  { tab: "Records", icon: IconTrophy, desc: "All-time Hall of Fame records" },
-];
 
 const PALETTE = ['#F17141', '#F8C777', '#6C4E2A', '#3C3530', '#D95F31', '#B4A99D', '#E6D3AE', '#806641'];
 
@@ -42,7 +25,7 @@ export default function OverviewTab({ onTabChange, onInfo }: OverviewTabProps) {
   const monthLabels = monthly.map((item) => item.key.slice(5));
 
   return (
-    <div className="space-y-8 pb-20">
+    <div className="space-y-10 pb-20">
       <Reveal delay={0}>
         <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -60,27 +43,6 @@ export default function OverviewTab({ onTabChange, onInfo }: OverviewTabProps) {
           <span className="inline-flex items-center rounded-full bg-[#FFECAE] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.13em] text-[#6C4E2A]">
             {analysis.days[0]?.date ?? "No dates"} — {analysis.days.at(-1)?.date ?? "yet"}
           </span>
-        </div>
-
-        {/* Interactive Chapter Indicator Banner */}
-        <div className="rounded-2xl border border-[#F17141]/20 bg-[#FFECAE]/50 p-4 shadow-2xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2 text-[12px] font-extrabold text-[#24201D]">
-              <span className="size-2 rounded-full bg-[#F17141] animate-pulse" />
-              <span>Explore the other 6 chapters in your observatory</span>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {chapters.map((ch) => (
-                <button
-                  key={ch.tab}
-                  onClick={() => onTabChange?.(ch.tab)}
-                  className="inline-flex items-center gap-1 rounded-full bg-[#FFFCF5] px-2.5 py-1 text-[10px] font-bold text-[#F17141] shadow-2xs hover:bg-[#F17141] hover:text-[#FFFCF5] transition cursor-pointer"
-                >
-                  {ch.tab} →
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </Reveal>
 
@@ -124,7 +86,7 @@ export default function OverviewTab({ onTabChange, onInfo }: OverviewTabProps) {
       </Reveal>
 
       <Reveal delay={0.3}>
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
           <div className="rounded-[25px] border border-[#EDE2D6] bg-[#FFF9F0] p-6">
             <div className="mb-8 flex items-start justify-between">
               <div>
@@ -190,6 +152,9 @@ export default function OverviewTab({ onTabChange, onInfo }: OverviewTabProps) {
           </div>
         </div>
       </Reveal>
+
+      {/* Storybook Chapter Progression Footer */}
+      <ChapterFooter currentTab="Overview" onTabChange={onTabChange} />
     </div>
   );
 }

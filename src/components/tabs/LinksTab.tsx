@@ -2,15 +2,18 @@ import { useTexTale } from '@/store/textale-store';
 import { MetricCard } from '@/components/metrics/MetricCard';
 import { MetricInfoButton } from '@/components/metrics/MetricInfoButton';
 import { Reveal } from '@/components/common/Reveal';
+import { ChapterFooter } from '@/components/common/ChapterFooter';
 import { formatNumber } from '@/lib/formatting';
 import { IconLink } from '@/components/icons';
 import { DistributionChart } from '@/components/charts/DistributionChart';
+import type { ExplorerTab } from '@/components/explorer';
 
 interface LinksTabProps {
+  onTabChange?: (tab: ExplorerTab) => void;
   onInfo?: (label: string) => void;
 }
 
-export default function LinksTab({ onInfo }: LinksTabProps) {
+export default function LinksTab({ onTabChange, onInfo }: LinksTabProps) {
   const { analysis } = useTexTale();
   if (!analysis) return null;
 
@@ -116,6 +119,9 @@ export default function LinksTab({ onInfo }: LinksTabProps) {
           </div>
         </Reveal>
       </div>
+
+      {/* Storybook Chapter Progression Footer */}
+      <ChapterFooter currentTab="Links" onTabChange={onTabChange} />
     </div>
   );
 }

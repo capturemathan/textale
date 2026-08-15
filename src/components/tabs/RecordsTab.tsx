@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { toPng } from 'html-to-image';
 import { useTexTale } from '@/store/textale-store';
 import { Reveal } from '@/components/common/Reveal';
 import { MetricInfoButton } from '@/components/metrics/MetricInfoButton';
+import { ChapterFooter } from '@/components/common/ChapterFooter';
 import {
   formatNumber,
   formatDayKey,
@@ -12,17 +13,17 @@ import {
   formatMessageDateTime,
   isMultiDaySession,
 } from '@/lib/formatting';
-import { IconDownload } from '@/components/icons';
+import type { ExplorerTab } from '@/components/explorer';
 
 interface RecordsTabProps {
+  onTabChange?: (tab: ExplorerTab) => void;
   onShare?: () => void;
   onInfo?: (label: string) => void;
 }
 
-export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
+export default function RecordsTab({ onTabChange, onShare, onInfo }: RecordsTabProps) {
   const { analysis } = useTexTale();
   const recordsRef = useRef<HTMLDivElement>(null);
-  const [busy, setBusy] = useState(false);
 
   if (!analysis) return null;
 
@@ -32,7 +33,6 @@ export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
       return;
     }
     if (!recordsRef.current) return;
-    setBusy(true);
     try {
       const dataUrl = await toPng(recordsRef.current, {
         pixelRatio: 2,
@@ -47,8 +47,6 @@ export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
       document.body.removeChild(link);
     } catch (err) {
       console.error('Failed to export image:', err);
-    } finally {
-      setBusy(false);
     }
   };
 
@@ -192,22 +190,12 @@ export default function RecordsTab({ onShare, onInfo }: RecordsTabProps) {
         ))}
       </div>
 
-      <Reveal delay={0.5}>
-        <div className="mt-12 rounded-[30px] border border-[#E8D9C8] bg-[#FFFCF5] p-8 text-center sm:p-12 shadow-[0_20px_60px_rgba(180,133,60,0.05)]">
-          <span className="editorial-script text-[28px] text-[#F17141] block mb-3">share the story</span>
-          <h3 className="text-[24px] font-extrabold text-[#24201D] mb-6">
-            Want to keep these records?
-          </h3>
-          <button
-            onClick={handleSaveImage}
-            disabled={busy}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F17141] px-6 py-3.5 text-[14px] font-bold text-[#FFFCF5] shadow-[0_10px_25px_rgba(241,113,65,0.2)] hover:-translate-y-0.5 hover:bg-[#e76537] transition duration-200 disabled:opacity-50 cursor-pointer"
-          >
-            <IconDownload className="size-5" />
-            {busy ? 'Exporting...' : 'Save as Image'}
-          </button>
-        </div>
-      </Reveal>
+      {/* Storybook Grand Finale Footer */}
+      <ChapterFooter
+        currentTab="Records"
+        onTabChange={onTabChange}
+        onShare={onShare || handleSaveImage}
+      />
     </div>
   );
 }

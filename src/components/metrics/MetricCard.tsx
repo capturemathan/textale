@@ -28,9 +28,9 @@ export function MetricCard({
                 e.stopPropagation();
                 onInfo();
               }}
-              className="grid size-6 shrink-0 place-items-center rounded-full text-[#A59A90] transition hover:bg-[#FFECAE] hover:text-[#F17141] cursor-pointer"
+              className="grid size-7 shrink-0 place-items-center rounded-full bg-[#24201D]/5 border border-[#24201D]/15 text-[#4A423B] transition-all hover:bg-[#FFECAE] hover:text-[#F17141] hover:border-[#F17141]/35 cursor-pointer shadow-2xs"
               aria-label={`Info about ${eyebrow}`}
-              title="How we came up with this value"
+              title="How we calculated this metric"
             >
               <IconInfo className="size-4" />
             </button>

@@ -147,11 +147,22 @@ export const IconChevronRight = (props: IconProps) => (
 );
 
 
-export const IconInfo = (props: IconProps) => (
-  <BaseIcon {...props}>
-    <path d="M12 2.5C17.5 2.5 21.5 6.5 21.5 12C21.5 17.5 17.5 21.5 12 21.5C6.5 21.5 2.5 17.5 2.5 12C2.5 6.5 6.5 2.5 12 2.5z" />
-    <path d="M12 11 C11.8 13 12.2 15 12 17 M12 7 C12 7 12.5 7 12.5 7" strokeWidth="2.5" strokeLinecap="round" />
-  </BaseIcon>
+export const IconInfo = ({ className = 'size-4', ...props }: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.25"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`inline-block shrink-0 ${className}`}
+    {...props}
+  >
+    <circle cx="12" cy="12" r="9.5" strokeWidth="2.25" />
+    <path d="M12 11v5" strokeWidth="2.75" strokeLinecap="round" />
+    <circle cx="12" cy="7.25" r="1.35" fill="currentColor" stroke="none" />
+  </svg>
 );
 
 
