@@ -10,6 +10,7 @@ import {
 } from "@/components/icons";
 import { UploadDropzone } from "./UploadDropzone";
 import { PrivacyModal } from "./PrivacyModal";
+import { ExportSteps } from "./ExportSteps";
 import { AppFooter } from "@/components/common/Footer";
 
 function BrandMark({ compact = false }: { compact?: boolean }) {
@@ -43,16 +44,20 @@ interface LandingPageProps {
 export function LandingPage({ onFileAccepted }: LandingPageProps) {
   const [showDetails, setShowDetails] = useState(false);
 
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <main className="noise-layer min-h-[100dvh] bg-[#FFFCF5] text-[#24201D]">
       <header className="mx-auto flex max-w-[1320px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
         <BrandMark />
         <div className="hidden items-center gap-6 text-[11px] font-bold text-[#766F69] sm:flex">
-          <button onClick={() => setShowDetails(true)} data-testid="button-how-it-works" className="transition hover:text-[#F17141]">How it works</button>
+          <button onClick={() => scrollTo("how-to-export")} data-testid="button-how-it-works" className="transition hover:text-[#F17141] cursor-pointer">How it works</button>
           <span className="h-4 w-px bg-[#E5DCD2]" />
           <PrivacyBadge />
         </div>
-        <button onClick={() => setShowDetails(true)} className="grid size-9 place-items-center rounded-full bg-[#F3EBE2] text-[#766F69] sm:hidden" aria-label="Show privacy details" data-testid="button-mobile-privacy">
+        <button onClick={() => setShowDetails(true)} className="grid size-9 place-items-center rounded-full bg-[#F3EBE2] text-[#766F69] sm:hidden cursor-pointer" aria-label="Show privacy details" data-testid="button-mobile-privacy">
           <IconShield className="size-[15px]" />
         </button>
       </header>
@@ -70,10 +75,13 @@ export function LandingPage({ onFileAccepted }: LandingPageProps) {
             Drop your WhatsApp export and discover the patterns hiding in your conversation — measured carefully, kept completely private.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button onClick={() => document.getElementById("import")?.scrollIntoView({ behavior: "smooth" })} data-testid="button-start-import" className="group inline-flex items-center gap-3 rounded-full bg-[#F17141] px-5 py-3.5 text-[13px] font-bold text-[#FFFCF5] shadow-[0_12px_30px_rgba(241,113,65,0.22)] transition hover:-translate-y-0.5">
+            <button onClick={() => scrollTo("import")} data-testid="button-start-import" className="group inline-flex items-center gap-3 rounded-full bg-[#F17141] px-5 py-3.5 text-[13px] font-bold text-[#FFFCF5] shadow-[0_12px_30px_rgba(241,113,65,0.22)] transition hover:-translate-y-0.5 cursor-pointer">
               Start with your export <IconArrowRight className="size-4 transition group-hover:translate-x-1" />
             </button>
-            <button onClick={() => setShowDetails(true)} data-testid="button-privacy-note" className="inline-flex items-center gap-2 rounded-full px-3 py-3 text-[12px] font-bold text-[#766F69] hover:bg-[#F3EBE2]">
+            <button onClick={() => scrollTo("how-to-export")} data-testid="button-view-steps" className="inline-flex items-center gap-2 rounded-full border border-[#E7D9C7] px-4 py-3 text-[12px] font-bold text-[#766F69] hover:bg-[#F3EBE2] hover:text-[#24201D] transition cursor-pointer">
+              How to export guide ↓
+            </button>
+            <button onClick={() => setShowDetails(true)} data-testid="button-privacy-note" className="inline-flex items-center gap-2 rounded-full px-3 py-3 text-[12px] font-bold text-[#766F69] hover:bg-[#F3EBE2] cursor-pointer">
               <IconShield className="size-3.5 text-[#F17141]" />Local by design
             </button>
           </div>
@@ -116,6 +124,9 @@ export function LandingPage({ onFileAccepted }: LandingPageProps) {
           <div className="pointer-events-none absolute -bottom-12 -left-2 size-24 rounded-full border border-dashed border-[#F17141]/35 sm:-left-8" />
         </div>
       </section>
+
+      {/* Flashy WhatsApp Export Step-by-Step Guide */}
+      <ExportSteps />
 
       <section id="import" className="mx-auto grid max-w-[1080px] gap-8 px-5 pb-20 sm:px-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-16 lg:pb-28">
         <div>

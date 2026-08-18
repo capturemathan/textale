@@ -235,3 +235,36 @@ export const IconMenu = (props: IconProps) => (
     <path d="M4 6h16M4 12h16M4 18h16" strokeWidth="2" />
   </BaseIcon>
 );
+
+export const IconSparkles = (props: IconProps) => (
+  <BaseIcon {...props}>
+    <path d="M12 3L13.8 8.2C14.1 9 14.8 9.7 15.6 10L20.8 11.8C21.7 12.1 21.7 13.4 20.8 13.7L15.6 15.5C14.8 15.8 14.1 16.5 13.8 17.3L12 22.5C11.7 23.4 10.4 23.4 10.1 22.5L8.3 17.3C8 16.5 7.3 15.8 6.5 15.5L1.3 13.7C0.4 13.4 0.4 12.1 1.3 11.8L6.5 10C7.3 9.7 8 9 8.3 8.2L10.1 3C10.4 2.1 11.7 2.1 12 3Z" />
+    <path d="M19 4L19.7 6.1C19.9 6.6 20.3 7 20.8 7.2L22.9 7.9C23.4 8.1 23.4 8.8 22.9 9L20.8 9.7C20.3 9.9 19.9 10.3 19.7 10.8L19 12.9C18.8 13.4 18.1 13.4 17.9 12.9L17.2 10.8C17 10.3 16.6 9.9 16.1 9.7L14 9C13.5 8.8 13.5 8.1 14 7.9L16.1 7.2C16.6 7 17 6.6 17.2 6.1L17.9 4C18.1 3.5 18.8 3.5 19 4Z" />
+  </BaseIcon>
+);
+
+export const IconSmartphone = (props: IconProps) => (
+  <BaseIcon {...props}>
+    <rect x="5" y="2" width="14" height="20" rx="3" ry="3" />
+    <path d="M12 18h.01" strokeWidth="2.5" />
+  </BaseIcon>
+);
+
+export const IconDotsVertical = (props: IconProps) => (
+  <BaseIcon {...props}>
+    <circle cx="12" cy="6" r="1.5" fill="currentColor" stroke="none" />
+    <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+    <circle cx="12" cy="18" r="1.5" fill="currentColor" stroke="none" />
+  </BaseIcon>
+);
+
+export const IconFileText = (props: IconProps) => (
+  <BaseIcon {...props}>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="16" y1="13" x2="8" y2="13" />
+    <line x1="16" y1="17" x2="8" y2="17" />
+    <polyline points="10 9 9 9 8 9" />
+  </BaseIcon>
+);
+
