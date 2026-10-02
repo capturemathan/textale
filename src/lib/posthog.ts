@@ -23,7 +23,7 @@ export function initPostHog() {
       mask_all_text: true,
       mask_all_element_attributes: true,
 
-      // Disable session recording entirely — chat data is too sensitive
+      // Disable session recording entirely; chat data is strictly private
       disable_session_recording: true,
 
       // Do not capture IP address or detailed geolocation

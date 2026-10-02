@@ -16,31 +16,31 @@ import { applyFilter } from "./filter";
 export const SESSION_GAP_THRESHOLD_MS = 30 * 60 * 1000;
 
 export const TIME_OF_DAY_BUCKETS = [
-  { key: "Night", label: "00:00–05:59", from: 0, to: 5 },
-  { key: "Morning", label: "06:00–11:59", from: 6, to: 11 },
-  { key: "Afternoon", label: "12:00–17:59", from: 12, to: 17 },
-  { key: "Evening", label: "18:00–23:59", from: 18, to: 23 },
+  { key: "Night", label: "00:00 to 05:59", from: 0, to: 5 },
+  { key: "Morning", label: "06:00 to 11:59", from: 6, to: 11 },
+  { key: "Afternoon", label: "12:00 to 17:59", from: 12, to: 17 },
+  { key: "Evening", label: "18:00 to 23:59", from: 18, to: 23 },
 ];
 
 const RESPONSE_BUCKETS: { key: string; max: number }[] = [
   { key: "< 1 min", max: 60_000 },
-  { key: "1–5 min", max: 5 * 60_000 },
-  { key: "5–15 min", max: 15 * 60_000 },
-  { key: "15–30 min", max: 30 * 60_000 },
-  { key: "30–60 min", max: 60 * 60_000 },
-  { key: "1–3 h", max: 3 * 3_600_000 },
-  { key: "3–6 h", max: 6 * 3_600_000 },
-  { key: "6–12 h", max: 12 * 3_600_000 },
-  { key: "12–24 h", max: 24 * 3_600_000 },
+  { key: "1 to 5 min", max: 5 * 60_000 },
+  { key: "5 to 15 min", max: 15 * 60_000 },
+  { key: "15 to 30 min", max: 30 * 60_000 },
+  { key: "30 to 60 min", max: 60 * 60_000 },
+  { key: "1 to 3 h", max: 3 * 3_600_000 },
+  { key: "3 to 6 h", max: 6 * 3_600_000 },
+  { key: "6 to 12 h", max: 12 * 3_600_000 },
+  { key: "12 to 24 h", max: 24 * 3_600_000 },
   { key: "24 h+", max: Infinity },
 ];
 
 const BURST_BUCKETS: { key: string; min: number; max: number }[] = [
   { key: "1", min: 1, max: 1 },
   { key: "2", min: 2, max: 2 },
-  { key: "3–5", min: 3, max: 5 },
-  { key: "6–10", min: 6, max: 10 },
-  { key: "11–20", min: 11, max: 20 },
+  { key: "3 to 5", min: 3, max: 5 },
+  { key: "6 to 10", min: 6, max: 10 },
+  { key: "11 to 20", min: 11, max: 20 },
   { key: "21+", min: 21, max: Infinity },
 ];
 

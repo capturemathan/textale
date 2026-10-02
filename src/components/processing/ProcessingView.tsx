@@ -80,7 +80,7 @@ export function ProcessingView() {
           <p className="editorial-script text-[26px] text-[#F17141]">a moment, please</p>
           <h1 className="mt-2 text-[38px] font-extrabold tracking-[-.065em]">Reading the shape of your chat.</h1>
           <p className="mx-auto mt-3 max-w-sm text-[13px] leading-6 text-[#766F69]">
-            Everything is happening locally. We never fake a percentage — just a sequence of real steps.
+            Everything is happening locally, calculated through an authentic sequence of verification steps.
           </p>
         </motion.div>
 

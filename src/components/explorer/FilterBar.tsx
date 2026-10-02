@@ -70,7 +70,7 @@ export function FilterBar({
               className="bg-transparent px-2 py-1 text-[12px] font-bold text-[#4E4640] outline-none [color-scheme:light] cursor-pointer"
               title="Start date"
             />
-            <span className="text-[12px] font-bold text-[#A59A90]">-</span>
+            <span className="text-[12px] font-bold text-[#A59A90]">to</span>
             <input
               type="date"
               value={toInputDate(filter.to ?? bounds.to)}

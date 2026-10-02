@@ -62,12 +62,12 @@ const SLIDES: Slide[] = [
         <div className="rounded-xl bg-[#24201D] p-4 text-[#FFFCF5]">
           <p className="text-[9px] font-extrabold uppercase tracking-wider text-[#FFECAE]">Top word</p>
           <p className="text-[18px] font-extrabold break-all text-[#F17141] mt-1">
-            {analysis.topWords[0] ? `"${analysis.topWords[0].key}"` : '—'}
+            {analysis.topWords[0] ? `"${analysis.topWords[0].key}"` : 'N/A'}
           </p>
         </div>
         <div className="rounded-xl bg-[#FFFCF5]/90 p-4 border border-[#F17141]/20 text-center">
           <p className="text-[9px] font-extrabold uppercase tracking-wider text-[#766F69]">Top emoji</p>
-          <p className="text-[36px] leading-tight mt-1">{analysis.topEmojis[0]?.key ?? '—'}</p>
+          <p className="text-[36px] leading-tight mt-1">{analysis.topEmojis[0]?.key ?? 'N/A'}</p>
         </div>
       </div>
     ),
@@ -90,7 +90,7 @@ const SLIDES: Slide[] = [
       <div className="my-auto space-y-3 text-center">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#6C4E2A]">Longest single conversation</p>
         <p className="text-[36px] font-extrabold leading-none text-[#F17141]">
-          {analysis.longestSession ? formatDuration(analysis.longestSession.durationMs) : '—'}
+          {analysis.longestSession ? formatDuration(analysis.longestSession.durationMs) : 'N/A'}
         </p>
         {analysis.longestSession && (
           <p className="text-[12px] font-bold text-[#24201D]">{formatNumber(analysis.longestSession.messageCount)} messages, back to back</p>

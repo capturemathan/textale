@@ -63,7 +63,7 @@ const DUEL_ROWS: DuelRow[] = [
   { label: 'Words typed', getValue: (s) => s.wordShare, format: (v) => formatPercent(v ?? 0) },
   { label: 'Conversations started', infoLabel: 'Initiations', getValue: (s) => s.initiations, format: (v) => formatNumber(v ?? 0) },
   { label: 'First to text (daily)', infoLabel: 'First Of Day', getValue: (s) => s.firstOfDay, format: (v) => formatNumber(v ?? 0) },
-  { label: 'Reply speed', infoLabel: 'Median Response Time', getValue: (s) => s.medianResponseMs, format: (v) => (v === null ? '—' : formatDuration(v)), lowerWins: true },
+  { label: 'Reply speed', infoLabel: 'Median Response Time', getValue: (s) => s.medianResponseMs, format: (v) => (v === null ? 'N/A' : formatDuration(v)), lowerWins: true },
   { label: 'Emojis used', getValue: (s) => s.emojis, format: (v) => formatNumber(v ?? 0) },
   { label: 'Questions asked', getValue: (s) => s.questions, format: (v) => formatNumber(v ?? 0) },
 ];

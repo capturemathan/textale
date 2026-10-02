@@ -172,7 +172,7 @@ export function DiscoveredView() {
                       )}
                     </>
                   ) : (
-                    <span className="text-[24px] sm:text-[30px] font-extrabold tracking-[-.06em] text-[#24201D]">—</span>
+                    <span className="text-[24px] sm:text-[30px] font-extrabold tracking-[-.06em] text-[#24201D]">N/A</span>
                   )}
                 </div>
                 <div className="text-[10px] font-extrabold uppercase tracking-[.14em] text-[#806641] mt-2">chat span</div>

@@ -33,7 +33,7 @@ export function ExportSteps() {
         </div>
 
         <h2 className="text-balance text-[34px] font-extrabold tracking-[-0.05em] text-[#24201D] sm:text-[46px] sm:leading-[1.05]">
-          Follow <span className="text-[#F17141]">3 quick steps</span> &amp; voilà — <br className="hidden sm:inline" />
+          Follow <span className="text-[#F17141]">3 quick steps</span> and voilà, <br className="hidden sm:inline" />
           your chat tale begins.
         </h2>
 

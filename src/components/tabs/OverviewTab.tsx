@@ -41,7 +41,7 @@ export default function OverviewTab({ onTabChange, onInfo }: OverviewTabProps) {
             </p>
           </div>
           <span className="inline-flex items-center rounded-full bg-[#FFECAE] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.13em] text-[#6C4E2A]">
-            {analysis.days[0]?.date ?? "No dates"} — {analysis.days.at(-1)?.date ?? "yet"}
+            {analysis.days[0]?.date ?? "No dates"} → {analysis.days.at(-1)?.date ?? "present"}
           </span>
         </div>
       </Reveal>

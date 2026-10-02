@@ -65,14 +65,14 @@ export function LandingPage({ onFileAccepted }: LandingPageProps) {
       <section className="mx-auto grid max-w-[1320px] items-center gap-12 px-5 pb-14 pt-9 sm:px-8 sm:pt-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-20 lg:px-12 lg:pb-24 lg:pt-20">
         <div className="page-enter">
           <div className="mb-6 flex items-center gap-3">
-            <span className="editorial-script -rotate-3 text-[22px] text-[#F17141]">a little observatory</span>
+            <span className="editorial-script -rotate-3 text-[22px] text-[#F17141]">Your tiny chat detective</span>
             <span className="h-px w-9 bg-[#F17141]/40" />
           </div>
           <h1 className="max-w-[700px] text-balance text-[clamp(48px,7vw,92px)] font-extrabold leading-[.94] tracking-[-0.075em]">
             Your chat has<br /><span className="text-[#F17141]">more data</span> than<br />you think.
           </h1>
-          <p className="mt-7 max-w-[490px] text-[15px] leading-7 text-[#766F69] sm:text-[17px]">
-            Drop your WhatsApp export and discover the patterns hiding in your conversation — measured carefully, kept completely private.
+          <p className="mt-7 max-w-[560px] text-[17px] leading-8 text-[#766F69] sm:text-[19px]">
+            Drop your WhatsApp export and discover the patterns hiding in your conversation, measured carefully and <span className="whitespace-nowrap font-extrabold text-[#24201D] bg-[#FFECAE] px-2.5 py-0.5 rounded-lg border border-[#EADFD5] shadow-2xs">kept completely private.</span>
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <button onClick={() => scrollTo("import")} data-testid="button-start-import" className="group inline-flex items-center gap-3 rounded-full bg-[#F17141] px-5 py-3.5 text-[13px] font-bold text-[#FFFCF5] shadow-[0_12px_30px_rgba(241,113,65,0.22)] transition hover:-translate-y-0.5 cursor-pointer">

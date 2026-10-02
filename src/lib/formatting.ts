@@ -12,7 +12,7 @@ export function formatPercent(value: number, digits = 1): string {
 }
 
 export function formatDuration(ms: number | null | undefined): string {
-  if (ms === null || ms === undefined || !Number.isFinite(ms)) return "—";
+  if (ms === null || ms === undefined || !Number.isFinite(ms)) return "N/A";
   const totalSeconds = Math.round(ms / 1000);
   if (totalSeconds < 60) return `${totalSeconds}s`;
   const minutes = Math.floor(totalSeconds / 60);
@@ -86,9 +86,9 @@ export function getChatSpanYMDParts(start: string | number, end: string | number
 }
 
 export function formatChatSpanYMD(start: string | number, end: string | number): string {
-  if (!start || !end) return "—";
+  if (!start || !end) return "N/A";
   const p = getChatSpanYMDParts(start, end);
-  if (!p) return "—";
+  if (!p) return "N/A";
 
   const parts: string[] = [];
   if (p.years > 0) parts.push(`${p.years} ${p.years === 1 ? "year" : "years"}`);
@@ -134,7 +134,7 @@ export function formatMonthKeyShort(key: string): string {
 }
 
 export function formatHour(hour: number | null): string {
-  if (hour === null) return "—";
+  if (hour === null) return "N/A";
   if (hour === 0) return "12 AM";
   if (hour === 12) return "12 PM";
   return hour < 12 ? `${hour} AM` : `${hour - 12} PM`;
