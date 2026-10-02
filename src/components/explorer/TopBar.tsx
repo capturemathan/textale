@@ -63,8 +63,9 @@ export function TopBar({
         </div>
         <button
           onClick={reset}
-          className="grid size-8 place-items-center rounded-full bg-[#F3EBE2] text-[#766F69] transition hover:bg-[#EADFD5] hover:text-[#F17141]"
-          title="Analyze another export"
+          className="grid size-8 place-items-center rounded-full bg-[#F3EBE2] text-[#766F69] transition hover:bg-[#FFECAE] hover:text-[#F17141] cursor-pointer"
+          title="Analyze another chat"
+          aria-label="Analyze another chat"
         >
           <IconReset className="size-4" />
         </button>

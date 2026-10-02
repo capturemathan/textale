@@ -1,6 +1,7 @@
 import React from 'react';
 import { Reveal } from '@/components/common/Reveal';
 import type { ExplorerTab } from '@/components/explorer';
+import { useTexTale } from '@/store/textale-store';
 import {
   IconActivity,
   IconMessageCircle,
@@ -9,6 +10,7 @@ import {
   IconHome,
   IconShare,
   IconArrowRight,
+  IconSparkles,
 } from '@/components/icons';
 
 interface ChapterFooterProps {
@@ -73,6 +75,7 @@ const CHAPTER_METADATA: Record<
 
 export function ChapterFooter({ currentTab, onTabChange, onShare }: ChapterFooterProps) {
   const meta = CHAPTER_METADATA[currentTab];
+  const { reset } = useTexTale();
 
   // Records (Final Chapter) - Storybook Grand Finale
   if (!meta.nextTab) {
@@ -100,13 +103,23 @@ export function ChapterFooter({ currentTab, onTabChange, onShare }: ChapterFoote
                   <span>Share Story Cards</span>
                 </button>
               )}
+              <button
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  reset();
+                }}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#E7D9C7] bg-[#24201D] px-6 py-3.5 text-[13px] font-bold text-[#FFFCF5] shadow-[0_10px_25px_rgba(36,32,29,0.18)] hover:-translate-y-0.5 hover:bg-[#3C3530] transition duration-200 cursor-pointer"
+              >
+                <IconSparkles className="size-4 text-[#FFECAE]" />
+                <span>Reveal another story</span>
+              </button>
               {onTabChange && (
                 <button
                   onClick={() => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     onTabChange('Overview');
                   }}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#EADFD5] bg-[#FFFCF5] px-5 py-3 text-[13px] font-bold text-[#24201D] hover:bg-[#FFECAE] transition cursor-pointer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#EADFD5] bg-[#FFFCF5] px-5 py-3 text-[13px] font-bold text-[#766F69] hover:bg-[#FFECAE] hover:text-[#24201D] transition cursor-pointer"
                 >
                   <IconHome className="size-4 text-[#F17141]" />
                   <span>Revisit Chapter 1: Overview</span>

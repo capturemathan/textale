@@ -47,7 +47,7 @@ export function FilterBar({
           <select
             value={filter.participant ?? ""}
             onChange={(e) => setFilter({ ...filter, participant: e.target.value || undefined })}
-            className="rounded-full border border-[#EADFD5] bg-[#FFFCF5] px-3.5 py-2 text-[12px] font-bold text-[#4E4640] outline-none transition focus:border-[#F17141] hover:bg-[#FFF8EA]"
+            className="rounded-full border border-[#EADFD5] bg-[#FFFCF5] px-3.5 py-2 text-[12px] font-bold text-[#4E4640] outline-none transition focus:border-[#F17141] hover:bg-[#FFF8EA] cursor-pointer"
             aria-label="Participant filter"
           >
             <option value="">Everyone</option>
@@ -96,10 +96,11 @@ export function FilterBar({
         {active ? (
           <button
             onClick={() => setFilter({})}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#EADFD5] bg-[#FFFCF5] px-3.5 py-2 text-[12px] font-bold text-[#766F69] transition hover:border-[#F17141]/40 hover:bg-[#FFF4E4] hover:text-[#F17141]"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#EADFD5] bg-[#FFFCF5] px-3.5 py-2 text-[12px] font-bold text-[#766F69] transition hover:border-[#F17141]/40 hover:bg-[#FFF4E4] hover:text-[#F17141] cursor-pointer"
+            title="Reset active filters"
           >
             <IconReset className="size-3.5" />
-            Reset
+            Reset filters
           </button>
         ) : (
           <span className="hidden text-[11px] font-bold text-[#A59A90] lg:inline-block">

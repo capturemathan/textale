@@ -134,9 +134,9 @@ export function MobileNavDrawer({
                 reset();
                 onClose();
               }}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E7D9C7] bg-[#FFFCF5] px-3 py-2.5 text-[12px] font-bold text-[#766F69] transition hover:text-[#F17141]"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#E7D9C7] bg-[#FFFCF5] px-3 py-2.5 text-[12px] font-bold text-[#766F69] transition hover:text-[#F17141] cursor-pointer"
             >
-              Analyze another export
+              Analyze another chat
             </button>
           </div>
         </motion.div>
