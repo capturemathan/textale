@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
-import type { Analysis } from '@/types';
+import type { Analysis, Participant } from '@/types';
 import {
   formatDayKey,
   formatDuration,
   formatNumber,
+  formatPercent,
   formatSessionDate,
   formatSessionTimeRange,
   formatMessageDateTime,
@@ -21,10 +22,11 @@ import {
 interface ShareCardProps {
   tab: string;
   analysis: Analysis;
+  comparePair?: [string, string] | null;
   onClose: () => void;
 }
 
-export default function ShareCard({ tab, analysis, onClose }: ShareCardProps) {
+export default function ShareCard({ tab, analysis, comparePair, onClose }: ShareCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [busy, setBusy] = useState(false);
 
@@ -177,7 +179,7 @@ export default function ShareCard({ tab, analysis, onClose }: ShareCardProps) {
             
             {/* Body Metric Visual */}
             <div className="flex-1 flex flex-col justify-center text-[#24201D] py-2">
-              <CardBody tab={tab} analysis={analysis} />
+              <CardBody tab={tab} analysis={analysis} comparePair={comparePair} />
             </div>
             
             {/* Bottom Footer Mark & TexTale Invitation Tagline */}
@@ -228,7 +230,7 @@ export default function ShareCard({ tab, analysis, onClose }: ShareCardProps) {
   );
 }
 
-function CardBody({ tab, analysis }: { tab: string; analysis: Analysis }) {
+function CardBody({ tab, analysis, comparePair }: { tab: string; analysis: Analysis; comparePair?: [string, string] | null }) {
   const tabLower = tab.toLowerCase();
   
   if (tabLower === 'overview') {
@@ -337,7 +339,7 @@ function CardBody({ tab, analysis }: { tab: string; analysis: Analysis }) {
     );
   }
   
-  if (tabLower === 'words') {
+  if (tabLower === 'words' || tabLower === 'expressions') {
     const topWord = analysis.topWords[0];
     return (
       <div className="my-auto space-y-4">
@@ -441,5 +443,62 @@ function CardBody({ tab, analysis }: { tab: string; analysis: Analysis }) {
     );
   }
   
+  if (tabLower === 'compare') {
+    const sorted = [...analysis.participants].sort((a, b) => b.messageCount - a.messageCount);
+    const [rawLeftId, rawRightId] = comparePair ?? [sorted[0]?.id ?? '', sorted[1]?.id ?? ''];
+    const leftId = rawLeftId;
+    let rightId = rawRightId;
+    if (leftId === rightId && sorted.length > 1) {
+      const fallback = sorted.find((p) => p.id !== leftId);
+      if (fallback) rightId = fallback.id;
+    }
+    const left = analysis.participants.find(p => p.id === leftId) ?? sorted[0];
+    const right = analysis.participants.find(p => p.id === rightId && p.id !== left?.id)
+      ?? analysis.participants.find(p => p.id !== left?.id)
+      ?? sorted[1];
+    if (!left || !right || left.id === right.id) return <p className="text-[14px] font-extrabold">Not enough data yet.</p>;
+
+    const statsFor = (p: Participant) => {
+      const entry = analysis.byParticipant[p.id] ?? analysis.byParticipant[p.name];
+      return {
+        messageShare: entry?.messageShare ?? 0,
+        medianResponseMs: entry?.medianResponseMs ?? null,
+      };
+    };
+    const leftStats = statsFor(left);
+    const rightStats = statsFor(right);
+    const leftFaster =
+      leftStats.medianResponseMs !== null && rightStats.medianResponseMs !== null
+        ? leftStats.medianResponseMs < rightStats.medianResponseMs
+        : null;
+
+    return (
+      <div className="my-auto space-y-4">
+        <div>
+          <span className="editorial-script text-[18px] text-[#F17141] block leading-none mb-1">head to head</span>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#6C4E2A]">Who Wins The Chat</p>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-xl bg-[#FFFCF5]/90 p-3 border border-[#F17141]/20 text-center">
+            <p className="text-[13px] font-extrabold text-[#24201D] truncate">{left.name}</p>
+            <p className="text-[20px] font-extrabold text-[#F17141] mt-1">{formatPercent(leftStats.messageShare)}</p>
+            <p className="text-[9px] font-bold uppercase tracking-wider text-[#766F69]">of messages</p>
+          </div>
+          <div className="rounded-xl bg-[#FFFCF5]/90 p-3 border border-[#F17141]/20 text-center">
+            <p className="text-[13px] font-extrabold text-[#24201D] truncate">{right.name}</p>
+            <p className="text-[20px] font-extrabold text-[#F17141] mt-1">{formatPercent(rightStats.messageShare)}</p>
+            <p className="text-[9px] font-bold uppercase tracking-wider text-[#766F69]">of messages</p>
+          </div>
+        </div>
+        {leftFaster !== null && (
+          <div className="flex justify-between items-center bg-[#FFFCF5]/90 rounded-xl px-3 py-1.5 border border-[#F17141]/20">
+            <span className="text-[11px] font-bold text-[#766F69]">Faster replier</span>
+            <span className="text-[12px] font-extrabold text-[#24201D]">{leftFaster ? left.name : right.name}</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return <p className="text-2xl font-black">{tab}</p>;
 }

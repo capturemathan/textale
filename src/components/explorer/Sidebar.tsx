@@ -3,9 +3,7 @@ import {
   IconHome,
   IconActivity,
   IconMessageCircle,
-  IconType,
   IconSmile,
-  IconLink,
   IconTrophy,
   IconLock,
   IconChevronRight,
@@ -17,9 +15,7 @@ const tabs: { label: ExplorerTab; icon: React.FC<any> }[] = [
   { label: "Overview", icon: IconHome },
   { label: "Activity", icon: IconActivity },
   { label: "Conversations", icon: IconMessageCircle },
-  { label: "Words", icon: IconType },
-  { label: "Emojis", icon: IconSmile },
-  { label: "Links", icon: IconLink },
+  { label: "Expressions", icon: IconSmile },
   { label: "Records", icon: IconTrophy },
 ];
 

@@ -24,14 +24,12 @@ Turn your WhatsApp chat exports into beautiful, interactive analytics — entire
 <tr>
 <td width="50%">
 
-### 📊 7 Chapters of Insights
+### 📊 5 Chapters of Insights
 - **Overview** — Messages, words, days, and conversation counts at a glance
 - **Activity** — Heatmaps, monthly trends, and hourly patterns
-- **Conversations** — Session analysis, reply speeds, and who starts the chat
-- **Words** — Top words, vocabulary richness, and message length stats
-- **Emojis** — Most used emojis and per-participant breakdown
-- **Links** — URL sharing patterns and domain analysis
-- **Records** — Longest streak, busiest day, and more superlatives
+- **Conversations** — Session analysis, reply speeds, flow, and Head-to-Head Compare duel
+- **Expressions** — Words & vocabulary, signature emojis, and shared web links
+- **Records** — Longest streak, busiest day, hall of fame, and chat wrapped
 
 </td>
 <td width="50%">
@@ -50,7 +48,7 @@ Turn your WhatsApp chat exports into beautiful, interactive analytics — entire
 
 1. **Export your WhatsApp chat** — Open any chat → ⋮ Menu → More → Export Chat (without media)
 2. **Visit [TexTale](https://capturemathan.github.io/textale/)** — Drop your `.txt` or `.zip` file
-3. **Explore** — Dive into 7 chapters of visualized insights
+3. **Explore** — Dive into 5 chapters of visualized insights
 
 > Works with both **1-on-1** and **group chat** exports.
 

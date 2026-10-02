@@ -28,6 +28,7 @@ export interface TexTaleState {
   error: string | null;
   chatEntries: string[];
   mediaFileCount: number;
+  allTimeBounds: { from: number; to: number } | null;
 }
 
 const initialState: TexTaleState = {
@@ -44,6 +45,7 @@ const initialState: TexTaleState = {
   error: null,
   chatEntries: [],
   mediaFileCount: 0,
+  allTimeBounds: null,
 };
 
 export interface TexTaleContextValue extends TexTaleState {
@@ -100,6 +102,10 @@ export function TexTaleProvider({ children }: { children: ReactNode }) {
               chatName: msg.sourceName || prev.fileName,
               filter: {},
               error: null,
+              allTimeBounds: {
+                from: msg.analysis.firstTimestamp,
+                to: msg.analysis.lastTimestamp,
+              },
             };
           case "analysis":
             return {

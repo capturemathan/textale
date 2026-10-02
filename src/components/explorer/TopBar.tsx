@@ -18,14 +18,14 @@ export function TopBar({
         <button
           onClick={onMenuClick}
           className="flex items-center gap-2 rounded-xl bg-[#FFECAE] px-2.5 py-1.5 text-[#24201D] transition hover:bg-[#F8C777] lg:hidden shadow-xs cursor-pointer border border-[#EADFD5] shrink-0"
-          aria-label="Open 7 chapters navigation menu"
+          aria-label="Open 5 chapters navigation menu"
         >
           <div className="relative">
             <IconMenu className="size-4 text-[#F17141]" />
             <span className="absolute -top-1 -right-1 size-2 rounded-full bg-[#F17141] animate-pulse" />
           </div>
           <div className="flex flex-col text-left leading-none">
-            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-[#806641]">7 Chapters</span>
+            <span className="text-[8.5px] font-extrabold uppercase tracking-wider text-[#806641]">5 Chapters</span>
             <span className="text-[11.5px] font-extrabold text-[#24201D] flex items-center gap-0.5">
               <span>{activeTab}</span>
               <span className="text-[#F17141] font-black text-[10px]">▾</span>

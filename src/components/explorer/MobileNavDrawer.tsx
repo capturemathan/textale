@@ -4,9 +4,7 @@ import {
   IconHome,
   IconActivity,
   IconMessageCircle,
-  IconType,
   IconSmile,
-  IconLink,
   IconTrophy,
   IconShield,
   IconClose,
@@ -18,10 +16,8 @@ import type { ExplorerTab } from './index';
 const tabs: { label: ExplorerTab; icon: React.FC<any>; description: string }[] = [
   { label: "Overview", icon: IconHome, description: "Total messages, active days & chat span" },
   { label: "Activity", icon: IconActivity, description: "Daily calendar, peak hours & volume" },
-  { label: "Conversations", icon: IconMessageCircle, description: "30-min gap sessions & response speeds" },
-  { label: "Words", icon: IconType, description: "Vocabulary variety & most used words" },
-  { label: "Emojis", icon: IconSmile, description: "#1 emojis & monthly emoji evolution" },
-  { label: "Links", icon: IconLink, description: "Top shared domains & web links" },
+  { label: "Conversations", icon: IconMessageCircle, description: "Sessions, reply speeds & head-to-head" },
+  { label: "Expressions", icon: IconSmile, description: "Words, signature emojis & shared links" },
   { label: "Records", icon: IconTrophy, description: "Hall of fame all-time records" },
 ];
 
@@ -81,7 +77,7 @@ export function MobileNavDrawer({
 
           <div className="py-3 px-1">
             <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#B4A99D]">
-              Navigation · 7 Chapters
+              Navigation · 5 Chapters
             </span>
             {participants.length > 0 && (
               <p className="text-[11px] font-bold text-[#806641] mt-0.5 truncate">

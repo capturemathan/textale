@@ -108,6 +108,14 @@ export const IconTrophy = (props: IconProps) => (
   </BaseIcon>
 );
 
+export const IconUsers = (props: IconProps) => (
+  <BaseIcon {...props}>
+    <circle cx="8.5" cy="8" r="3" />
+    <circle cx="16" cy="8.5" r="2.5" />
+    <path d="M3 20c0-3.5 2.5-6 5.5-6s5.5 2.5 5.5 6M14.5 14.3c2.8.3 4.5 2.5 4.5 5.7" />
+  </BaseIcon>
+);
+
 
 // Actions
 export const IconUpload = (props: IconProps) => (

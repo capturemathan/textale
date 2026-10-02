@@ -15,22 +15,25 @@ function formatDayKeyShort(dateStr: string) {
 
 export function FilterBar({
   activeTab,
+  shareLabel,
   onShare,
 }: {
   activeTab: ExplorerTab;
+  shareLabel?: string;
   onShare?: () => void;
 }) {
-  const { analysis, filter, setFilter, participants, recomputing } = useTexTale();
+  const { analysis, filter, setFilter, participants, recomputing, allTimeBounds } = useTexTale();
 
   const bounds = useMemo(() => {
+    if (allTimeBounds) return allTimeBounds;
     if (!analysis) return null;
     return { from: analysis.firstTimestamp, to: analysis.lastTimestamp };
-  }, [analysis]);
+  }, [allTimeBounds, analysis]);
 
   if (!bounds) return null;
   const active = filter.participant !== undefined || filter.from !== undefined || filter.to !== undefined;
 
-  const canShare = ['Overview', 'Words', 'Emojis'].includes(activeTab);
+  const canShare = true;
 
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-[#EADFD5] pb-5">
@@ -110,7 +113,7 @@ export function FilterBar({
             className="inline-flex items-center gap-2 rounded-full bg-[#F17141] px-4 py-2 text-[12px] font-extrabold text-[#FFFCF5] shadow-[0_8px_20px_rgba(241,113,65,0.2)] transition hover:-translate-y-0.5 hover:bg-[#e76537] cursor-pointer"
           >
             <IconShare className="size-[14px]" />
-            Share {activeTab}
+            {shareLabel ?? `Share ${activeTab}`}
           </button>
         )}
       </div>

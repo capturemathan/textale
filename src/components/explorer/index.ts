@@ -2,9 +2,7 @@ export type ExplorerTab =
   | "Overview"
   | "Activity"
   | "Conversations"
-  | "Words"
-  | "Emojis"
-  | "Links"
+  | "Expressions"
   | "Records";
 
 export * from "./ExplorerLayout";

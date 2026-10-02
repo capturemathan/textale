@@ -1,9 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
 import { useTexTale } from '@/store/textale-store';
 import { Reveal } from '@/components/common/Reveal';
 import { MetricInfoButton } from '@/components/metrics/MetricInfoButton';
 import { ChapterFooter } from '@/components/common/ChapterFooter';
+import { IconSparkles } from '@/components/icons';
+import WrappedCard from '@/components/share/WrappedCard';
 import {
   formatNumber,
   formatDayKey,
@@ -22,7 +24,8 @@ interface RecordsTabProps {
 }
 
 export default function RecordsTab({ onTabChange, onShare, onInfo }: RecordsTabProps) {
-  const { analysis } = useTexTale();
+  const { analysis, participants } = useTexTale();
+  const [showWrapped, setShowWrapped] = useState(false);
   const recordsRef = useRef<HTMLDivElement>(null);
 
   if (!analysis) return null;
@@ -123,9 +126,18 @@ export default function RecordsTab({ onTabChange, onShare, onInfo }: RecordsTabP
             <span className="size-1.5 rounded-full bg-[#F17141]" />
             Hall of Fame
           </div>
-          <h2 className="text-[clamp(27px,4vw,43px)] font-extrabold leading-[1.02] tracking-[-0.055em] text-[#24201D]">
-            The all-time records.
-          </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h2 className="text-[clamp(27px,4vw,43px)] font-extrabold leading-[1.02] tracking-[-0.055em] text-[#24201D]">
+              The all-time records.
+            </h2>
+            <button
+              onClick={() => setShowWrapped(true)}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F17141] text-[#FFFCF5] shadow-[0_10px_25px_rgba(241,113,65,0.2)] hover:-translate-y-0.5 hover:bg-[#e76537] px-5 py-2.5 text-[12px] font-bold transition duration-200 self-start sm:self-auto shrink-0 cursor-pointer"
+            >
+              <IconSparkles className="size-4" />
+              See your Chat Wrapped
+            </button>
+          </div>
         </div>
       </Reveal>
 
@@ -196,6 +208,15 @@ export default function RecordsTab({ onTabChange, onShare, onInfo }: RecordsTabP
         onTabChange={onTabChange}
         onShare={onShare || handleSaveImage}
       />
+
+      {showWrapped && analysis && (
+        <WrappedCard
+          analysis={analysis}
+          participants={participants}
+          onClose={() => setShowWrapped(false)}
+          source="records"
+        />
+      )}
     </div>
   );
 }

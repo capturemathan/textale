@@ -4,9 +4,7 @@ import type { ExplorerTab } from '@/components/explorer';
 import {
   IconActivity,
   IconMessageCircle,
-  IconType,
   IconSmile,
-  IconLink,
   IconTrophy,
   IconHome,
   IconShare,
@@ -45,48 +43,30 @@ const CHAPTER_METADATA: Record<
     title: "Activity",
     nextTab: "Conversations",
     nextNumber: "03",
-    nextTitle: "Conversations & Replies",
-    nextTeaser: "See reply speeds, who initiates chats most often, and your longest continuous chat marathon.",
+    nextTitle: "Conversations & Dynamics",
+    nextTeaser: "See reply speeds, who initiates chats, and head-to-head comparison duel.",
     nextIcon: IconMessageCircle,
   },
   Conversations: {
     chapterNumber: "03",
     title: "Conversations",
-    nextTab: "Words",
+    nextTab: "Expressions",
     nextNumber: "04",
-    nextTitle: "Words & Vocabulary",
-    nextTeaser: "Uncover your unique vocabulary richness, most used words, and question asking habits.",
-    nextIcon: IconType,
-  },
-  Words: {
-    chapterNumber: "04",
-    title: "Words",
-    nextTab: "Emojis",
-    nextNumber: "05",
-    nextTitle: "Emojis & Reactions",
-    nextTeaser: "Discover your signature emoji favorites, monthly emotion trends, and participant rankings.",
+    nextTitle: "Expressions & Vocabulary",
+    nextTeaser: "Uncover your unique vocabulary, signature emojis, and all shared web links.",
     nextIcon: IconSmile,
   },
-  Emojis: {
-    chapterNumber: "05",
-    title: "Emojis",
-    nextTab: "Links",
-    nextNumber: "06",
-    nextTitle: "Links & Web Footprint",
-    nextTeaser: "Trace every article, video, website, and domain you've shared together over the years.",
-    nextIcon: IconLink,
-  },
-  Links: {
-    chapterNumber: "06",
-    title: "Links",
+  Expressions: {
+    chapterNumber: "04",
+    title: "Expressions",
     nextTab: "Records",
-    nextNumber: "07",
+    nextNumber: "05",
     nextTitle: "Hall of Fame Records",
     nextTeaser: "The grand finale: all-time records, streaks, superlatives, and marathon chat milestones.",
     nextIcon: IconTrophy,
   },
   Records: {
-    chapterNumber: "07",
+    chapterNumber: "05",
     title: "Records",
   },
 };
@@ -139,7 +119,7 @@ export function ChapterFooter({ currentTab, onTabChange, onShare }: ChapterFoote
     );
   }
 
-  // Chapters 1 to 6 - Read Next Chapter Card
+  // Chapters 1 to 4 - Read Next Chapter Card
   const NextIcon = meta.nextIcon || IconArrowRight;
   return (
     <Reveal delay={0.4}>
@@ -150,7 +130,7 @@ export function ChapterFooter({ currentTab, onTabChange, onShare }: ChapterFoote
             <div className="flex items-center gap-2">
               <span className="editorial-script text-[22px] text-[#F17141]">continue reading</span>
               <span className="rounded-full bg-[#FFECAE] px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[#6C4E2A]">
-                Chapter {meta.nextNumber} of 07
+                Chapter {meta.nextNumber} of 05
               </span>
             </div>
             <h3 className="text-[22px] sm:text-[26px] font-extrabold text-[#24201D] tracking-tight">

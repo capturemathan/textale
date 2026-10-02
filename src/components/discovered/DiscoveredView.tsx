@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'motion/react';
 import { useTexTale } from '@/store/textale-store';
 import { IconMessageCircle, IconArrowRight, IconLogo } from '@/components/icons';
 import { AppFooter } from '@/components/common/Footer';
 import { getChatSpanYMDParts } from '@/lib/formatting';
+import WrappedCard from '@/components/share/WrappedCard';
 
 function BrandMark() {
   return (
@@ -32,6 +33,7 @@ function AnimatedNumber({ value }: { value: number }) {
 
 export function DiscoveredView() {
   const { analysis, participants, messageCount, revealStory } = useTexTale();
+  const [showWrapped, setShowWrapped] = useState(false);
 
   if (!analysis) return null;
 
@@ -77,8 +79,10 @@ export function DiscoveredView() {
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-[15px] font-extrabold text-[#24201D] leading-snug break-words">
-                        {participantNames}
+                      <p className="text-[15px] font-extrabold text-[#24201D] leading-snug break-words line-clamp-3">
+                        {participants.length <= 3 
+                          ? participantNames 
+                          : `${participants.slice(0, 3).map(p => p.name).join(" + ")} ... and ${participants.length - 3} more`}
                       </p>
                       {participants.length > 2 && (
                         <span className="rounded-full bg-[#F17141]/10 px-2.5 py-0.5 text-[10px] font-extrabold text-[#F17141]">
@@ -177,19 +181,36 @@ export function DiscoveredView() {
           </div>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}>
-            <button 
-              onClick={revealStory} 
-              className="mt-10 inline-flex items-center justify-center gap-2 rounded-full bg-[#F17141] text-[#FFFCF5] shadow-[0_10px_25px_rgba(241,113,65,0.2)] hover:-translate-y-0.5 hover:bg-[#e76537] px-6 py-3.5 text-[12px] font-bold transition duration-200 cursor-pointer"
-            >
-              Reveal the story <IconArrowRight className="w-4 h-4" />
-            </button>
-            <p className="mt-4 text-[11px] text-[#A59A90] mb-6">Everything was processed in your browser.</p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button 
+                onClick={revealStory} 
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#F17141] text-[#FFFCF5] shadow-[0_10px_25px_rgba(241,113,65,0.2)] hover:-translate-y-0.5 hover:bg-[#e76537] px-6 py-3.5 text-[12px] font-bold transition duration-200 cursor-pointer"
+              >
+                Reveal the story <IconArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setShowWrapped(true)}
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-[#EADFD5] bg-[#FFFCF5] text-[#24201D] hover:bg-[#FFECAE] px-6 py-3.5 text-[12px] font-bold transition duration-200 cursor-pointer"
+              >
+                See your Chat Wrapped
+              </button>
+            </div>
+            <p className="mt-5 text-[11px] text-[#A59A90] mb-6">Everything was processed in your browser.</p>
             <div className="border-t border-[#EADFD5]/60 pt-4">
               <AppFooter />
             </div>
           </motion.div>
         </div>
       </div>
+
+      {showWrapped && analysis && (
+        <WrappedCard
+          analysis={analysis}
+          participants={participants}
+          onClose={() => setShowWrapped(false)}
+          source="discovered"
+        />
+      )}
     </main>
   );
 }

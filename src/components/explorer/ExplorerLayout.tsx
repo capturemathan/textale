@@ -8,11 +8,13 @@ import type { ExplorerTab } from "./index";
 
 export function ExplorerLayout({
   activeTab,
+  shareLabel,
   onTabChange,
   onShare,
   children,
 }: {
   activeTab: ExplorerTab;
+  shareLabel?: string;
   onTabChange: (tab: ExplorerTab) => void;
   onShare?: () => void;
   children: ReactNode;
@@ -27,7 +29,7 @@ export function ExplorerLayout({
 
         <main className="flex-1 px-4 py-6 sm:px-8 lg:px-12 pb-16 max-w-7xl mx-auto w-full flex flex-col justify-between">
           <div>
-            <FilterBar activeTab={activeTab} onShare={onShare} />
+            <FilterBar activeTab={activeTab} shareLabel={shareLabel} onShare={onShare} />
             {children}
           </div>
           <footer className="mt-12 border-t border-[#EADFD5] pt-6 pb-2 text-center">
