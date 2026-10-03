@@ -112,12 +112,14 @@ export default function ActivityTab({ onTabChange, onInfo, onShare }: ActivityTa
           <div className="mb-6 flex items-start justify-between">
             <div>
               <h3 className="text-[15px] font-extrabold">Time of day</h3>
-              <p className="mt-1 text-[11px] text-[#766F69]">Fixed four-bucket distribution.</p>
+              <p className="mt-1 text-[11px] text-[#766F69]">Activity distribution across morning, afternoon, and night.</p>
             </div>
             {onInfo && <MetricInfoButton onClick={() => onInfo("Time of day")} label="Time of day" />}
           </div>
           <div className="space-y-4">
-            {analysis.timeOfDay.map(tod => {
+            {[...analysis.timeOfDay]
+              .sort((a, b) => b.count - a.count)
+              .map(tod => {
               const total = analysis.totalMessages || 1;
               const percent = (tod.count / total) * 100;
               return (

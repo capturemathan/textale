@@ -16,10 +16,9 @@ import { applyFilter } from "./filter";
 export const SESSION_GAP_THRESHOLD_MS = 30 * 60 * 1000;
 
 export const TIME_OF_DAY_BUCKETS = [
-  { key: "Night", label: "00:00 to 05:59", from: 0, to: 5 },
-  { key: "Morning", label: "06:00 to 11:59", from: 6, to: 11 },
-  { key: "Afternoon", label: "12:00 to 17:59", from: 12, to: 17 },
-  { key: "Evening", label: "18:00 to 23:59", from: 18, to: 23 },
+  { key: "Morning", label: "06:00 to 11:59", matches: (h: number) => h >= 6 && h <= 11 },
+  { key: "Afternoon", label: "12:00 to 17:59", matches: (h: number) => h >= 12 && h <= 17 },
+  { key: "Night", label: "18:00 to 05:59", matches: (h: number) => h >= 18 || h <= 5 },
 ];
 
 const RESPONSE_BUCKETS: { key: string; max: number }[] = [
@@ -291,7 +290,7 @@ export function analyze(
     bump(yearMap, yk);
     hours[d.getHours()] = (hours[d.getHours()] ?? 0) + 1;
     weekdays[d.getDay()] = (weekdays[d.getDay()] ?? 0) + 1;
-    const bucket = TIME_OF_DAY_BUCKETS.find((b) => d.getHours() >= b.from && d.getHours() <= b.to);
+    const bucket = TIME_OF_DAY_BUCKETS.find((b) => b.matches(d.getHours()));
     if (bucket) bump(timeOfDayMap, bucket.key);
 
     if (!seenDayFirst.has(dk)) {
@@ -424,7 +423,9 @@ export function analyze(
     weekdays,
     peakWeekday: totalMessages ? weekdays.indexOf(Math.max(...weekdays)) : null,
     weekendShare: totalMessages ? (weekendMessages / totalMessages) * 100 : 0,
-    timeOfDay: TIME_OF_DAY_BUCKETS.map((b) => ({ key: b.key, count: timeOfDayMap.get(b.key) ?? 0 })),
+    timeOfDay: TIME_OF_DAY_BUCKETS.map((b) => ({ key: b.key, count: timeOfDayMap.get(b.key) ?? 0 })).sort(
+      (a, b) => b.count - a.count
+    ),
     sessionCount: sessions.length,
     averageSessionMessages: sessions.length ? totalMessages / sessions.length : 0,
     medianSessionMessages: median(sessions.map((s) => s.messageCount)) ?? 0,

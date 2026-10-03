@@ -114,11 +114,11 @@ export const METHODOLOGY_DICTIONARY: Record<string, MetricMethodology> = {
   },
   "Time of day": {
     title: "Time of Day Distribution",
-    measures: "Messages grouped into four standard 6-hour time periods.",
-    formula: "Night (0 to 5), Morning (6 to 11), Afternoon (12 to 17), Evening (18 to 23)",
-    method: "Aggregates messages into standard 6-hour time of day buckets.",
+    measures: "Messages grouped into three standard time periods: morning, afternoon, and night.",
+    formula: "Morning (06:00 to 11:59), Afternoon (12:00 to 17:59), Night (18:00 to 05:59)",
+    method: "Aggregates messages into three time of day buckets sorted in descending order of volume.",
     classification: "Derived",
-    limitations: "Uses fixed 6-hour time intervals.",
+    limitations: "Uses fixed time intervals (Morning 06:00 to 11:59, Afternoon 12:00 to 17:59, Night 18:00 to 05:59).",
   },
   "Who starts it?": {
     title: "Session Initiator Share",
