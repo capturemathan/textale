@@ -1,9 +1,11 @@
 export function Donut({
   segments,
   size = 160,
+  showLegend = false,
 }: {
   segments: { label: string; value: number; color: string }[];
   size?: number;
+  showLegend?: boolean;
 }) {
   const total = segments.reduce((sum, s) => sum + s.value, 0) || 1;
   
@@ -16,7 +18,7 @@ export function Donut({
   });
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center">
       <div 
         className="relative shrink-0" 
         style={{ width: size, height: size }}
@@ -39,27 +41,29 @@ export function Donut({
         </div>
       </div>
       
-      <div className="w-full space-y-4">
-        {segments.map((segment) => {
-          const percentage = ((segment.value / total) * 100).toFixed(1);
-          return (
-            <div key={segment.label}>
-              <div className="flex items-center justify-between text-[12px]">
-                <span className="flex items-center gap-2 font-bold text-[#24201D]">
-                  <span 
-                    className="size-2.5 rounded-full" 
-                    style={{ backgroundColor: segment.color }}
-                  />
-                  {segment.label}
-                </span>
-                <span className="font-extrabold text-[#24201D]">
-                  {percentage}%
-                </span>
+      {showLegend && (
+        <div className="w-full space-y-4 mt-6">
+          {segments.map((segment) => {
+            const percentage = ((segment.value / total) * 100).toFixed(1);
+            return (
+              <div key={segment.label}>
+                <div className="flex items-center justify-between text-[12px]">
+                  <span className="flex items-center gap-2 font-bold text-[#24201D]">
+                    <span 
+                      className="size-2.5 rounded-full" 
+                      style={{ backgroundColor: segment.color }}
+                    />
+                    {segment.label}
+                  </span>
+                  <span className="font-extrabold text-[#24201D]">
+                    {percentage}%
+                  </span>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

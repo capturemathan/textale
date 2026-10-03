@@ -393,15 +393,20 @@ export default function ConversationsTab({
                   <div className="w-full space-y-4 max-h-[320px] overflow-y-auto pr-1.5 custom-scrollbar">
                     {sortedParticipants.map((p, i) => {
                       const init = analysis.byParticipant[p.id]?.initiations ?? analysis.byParticipant[p.name]?.initiations ?? 0;
-                      const pct = (init / totalInitiations) * 100;
+                      const pct = totalInitiations > 0 ? (init / totalInitiations) * 100 : 0;
                       const color = PALETTE[i % PALETTE.length];
                       return (
-                        <div key={p.id} className="flex justify-between items-center text-[12px]">
-                          <span className="font-bold flex items-center gap-2 truncate pr-2 text-[#24201D]">
-                            <span className="size-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
-                            <span className="truncate">{p.name}</span>
-                          </span>
-                          <span className="font-extrabold shrink-0">{pct.toFixed(1)}% ({formatNumber(init)})</span>
+                        <div key={p.id}>
+                          <div className="flex justify-between items-center text-[12px]">
+                            <span className="font-bold flex items-center gap-2 truncate pr-2 text-[#24201D]">
+                              <span className="size-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                              <span className="truncate">{p.name}</span>
+                            </span>
+                            <span className="font-extrabold shrink-0">{pct.toFixed(1)}% · {formatNumber(init)}</span>
+                          </div>
+                          <div className="mt-2 h-2 rounded-full bg-[#EDE2D6] overflow-hidden">
+                            <div className="h-full rounded-full transition-all duration-300" style={{ width: `${pct}%`, backgroundColor: color }} />
+                          </div>
                         </div>
                       );
                     })}
